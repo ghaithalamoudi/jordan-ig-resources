@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Chemistry (WCH)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #64ffda;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #64ffda;
+            font-size: 2.5em;
+            margin-top: 40px;
+            margin-bottom: 60px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .main-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        .main-nav-btn {
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 12px;
+            padding: 20px 30px;
+            font-size: 1.4em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            text-align: center;
+            min-width: 250px;
+            flex: 1;
+            max-width: 350px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .main-nav-btn:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.5);
+            transform: translateY(-3px);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.5);
+            transform: translateY(-3px);
+        }
+    </style>
+</head>
+<body>
+    <a href="../subjects.html" class="back-button">← Back to Subjects</a>
+    <h1 class="main-title">AS Chemistry (WCH)</h1>
+    
+    <div class="main-nav">
+        <a href="notes.html" class="main-nav-btn">Notes</a>
+        <a href="topical_questions.html" class="main-nav-btn">Topical Questions</a>
+        <a href="past_papers.html" class="main-nav-btn">Past Papers</a>
+    </div>
+</body>
+</html>

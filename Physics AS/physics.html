@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Physics (WPH)</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #64ffda;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Remove the top menu */
+        .top-menu {
+            display: none;
+        }
+
+        .menu-button {
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            z-index: 1001;
+        }
+
+        .menu-button .line {
+            width: 25px;
+            height: 2px;
+            background-color: #64ffda;
+            transition: all 0.3s ease;
+        }
+
+        .menu-button.active .line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-button.active .line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.active .line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .menu-button:hover .line {
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+        }
+
+        .menu-content {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: transparent;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-content.active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .menu-item {
+            color: #64ffda;
+            padding: 20px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 1.8em;
+            border: 2px solid #64ffda;
+            background: transparent;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            width: 60%;
+            max-width: 400px;
+        }
+
+        .menu-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: scale(1.05);
+            border-color: #64ffda;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .menu-separator {
+            width: 60%;
+            max-width: 400px;
+            height: 1px;
+            background: rgba(100, 255, 218, 0.3);
+            margin: 10px 0;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            display: block;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #64ffda;
+            font-size: 2.5em;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            letter-spacing: 2px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Main Navigation Buttons */
+        .main-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .main-nav-btn {
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 20px 30px;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 250px;
+            position: relative;
+            overflow: hidden;
+            text-decoration: none;
+            margin: 10px;
+        }
+
+        .main-nav-btn:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .main-nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .main-nav-btn:hover::before {
+            left: 100%;
+        }
+
+        /* Back button styling */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.5);
+            transform: translateY(-3px);
+        }
+    </style>
+	<link href="../Website%20colors.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <h1 class="main-title">AS Physics (WPH)</h1>
+    
+    <div class="main-nav">
+        <a href="notes.html" class="main-nav-btn">Notes</a>
+        <a href="topical_questions.html" class="main-nav-btn">Topical Questions</a>
+        <a href="past_papers.html" class="main-nav-btn">Past Papers</a>
+        <a href="../subjects.html" class="back-button">← Back to Subjects</a>
+    </div>
+    
+    <!-- Remove this entire menu section -->
+    <!-- 
+    <div class="top-menu">
+        <button class="menu-button">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </button>
+        <div class="menu-content">
+            <div class="menu-item">Home</div>
+            <div class="menu-item">About</div>
+            <div class="menu-item">Services</div>
+            <div class="menu-separator"></div>
+            <div class="menu-item">Contact</div>
+        </div>
+    </div>
+    -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.querySelector('.menu-button');
+            const menuContent = document.querySelector('.menu-content');
+            const overlay = document.querySelector('.overlay');
+
+            if (menuButton && menuContent && overlay) {
+                menuButton.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    menuContent.classList.toggle('active');
+                    overlay.classList.toggle('active');
+                    this.classList.toggle('active');
+                    this.setAttribute('aria-expanded', menuContent.classList.contains('active'));
+                });
+
+                document.querySelectorAll('.menu-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        console.log('Clicked:', this.textContent);
+                        menuContent.classList.remove('active');
+                        overlay.classList.remove('active');
+                        menuButton.classList.remove('active');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    });
+                });
+                
+                // Close menu when clicking elsewhere
+                document.addEventListener('click', function(e) {
+                    if (!menuContent.contains(e.target) && e.target !== menuButton) {
+                        menuContent.classList.remove('active');
+                        overlay.classList.remove('active');
+                        menuButton.classList.remove('active');
+                        menuButton.setAttribute('aria-expanded', 'false');
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

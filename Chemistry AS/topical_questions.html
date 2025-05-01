@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Topical Questions - AS Chemistry</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a192f 0%, #0f1624 100%);
+            color: #64ffda;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 12px 24px;
+            text-decoration: none;
+            color: #64ffda;
+            background: transparent;
+            border: 2px solid #64ffda;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+            margin-bottom: 40px;
+        }
+
+        .back-button:hover {
+            background: rgba(100, 255, 218, 0.1);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.4);
+        }
+
+        .main-title {
+            color: #64ffda;
+            font-size: 2.5em;
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .dropdown-container {
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+
+        .section-title {
+            color: #64ffda;
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .dropdown {
+            position: relative;
+            width: 100%;
+        }
+
+        .dropdown-btn {
+            width: 100%;
+            padding: 20px;
+            background: transparent;
+            border: 2px solid #64ffda;
+            border-radius: 10px;
+            color: white;
+            font-size: 1.2em;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.1);
+        }
+
+        .dropdown-btn:hover {
+            background: rgba(100, 255, 218, 0.1);
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.2);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            width: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            border: 2px solid #64ffda;
+            border-radius: 10px;
+            margin-top: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 1000;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .dropdown-content.show {
+            display: block;
+            animation: slideDown 0.3s ease forwards;
+        }
+
+        .dropdown-content a {
+            color: white;
+            padding: 15px 20px;
+            text-decoration: none;
+            display: block;
+            transition: all 0.3s ease;
+            border-bottom: 1px solid rgba(100, 255, 218, 0.1);
+        }
+
+        .dropdown-content a:hover {
+            background: rgba(100, 255, 218, 0.1);
+            color: #64ffda;
+            padding-left: 25px;
+        }
+
+        /* Scrollbar styling */
+        .dropdown-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .dropdown-content::-webkit-scrollbar-track {
+            background: rgba(10, 25, 47, 0.5);
+        }
+
+        .dropdown-content::-webkit-scrollbar-thumb {
+            background: #64ffda;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <a href="chemistry.html" class="back-button">← Back to Chemistry</a>
+    <h1 class="main-title">AS Chemistry Topical Questions</h1>
+
+    <div class="dropdown-container">
+        <h2 class="section-title">Multiple Choice Questions</h2>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown('mcqDropdown')">Select a Topic</button>
+            <div id="mcqDropdown" class="dropdown-content">
+                <a href="Topic Questions/MCQ/Alkanes.pdf">Alkanes</a>
+                <a href="Topic Questions/MCQ/Alkenes.pdf">Alkenes</a>
+                <a href="Topic Questions/MCQ/Amount of Substance.pdf">Amount of Substance</a>
+                <a href="Topic Questions/MCQ/Atomic Structure.pdf">Atomic Structure</a>
+                <a href="Topic Questions/MCQ/Covalent Bonding & Structure.pdf">Covalent Bonding & Structure</a>
+                <a href="Topic Questions/MCQ/Electrons & Ions.pdf">Electrons & Ions</a>
+                <a href="Topic Questions/MCQ/Energetics.pdf">Energetics</a>
+                <a href="Topic Questions/MCQ/Formulae & Equations.pdf">Formulae & Equations</a>
+                <a href="Topic Questions/MCQ/Group 7.pdf">Group 7</a>
+                <a href="Topic Questions/MCQ/Groups 1 & 2.pdf">Groups 1 & 2</a>
+                <a href="Topic Questions/MCQ/Intermolecular Forces.pdf">Intermolecular Forces</a>
+                <a href="Topic Questions/MCQ/Introduction to Kinetics & Equilibria.pdf">Introduction to Kinetics & Equilibria</a>
+                <a href="Topic Questions/MCQ/Introductory Organic Chemistry.pdf">Introductory Organic Chemistry</a>
+                <a href="Topic Questions/MCQ/Ionic & Metallic Bonding & Structure.pdf">Ionic & Metallic Bonding & Structure</a>
+                <a href="Topic Questions/MCQ/Organic Chemistry Alcohols.pdf">Organic Chemistry Alcohols</a>
+                <a href="Topic Questions/MCQ/Organic Chemistry Halogenoalkanes.pdf">Organic Chemistry Halogenoalkanes</a>
+                <a href="Topic Questions/MCQ/Organic Chemistry Techniques & Spectra.pdf">Organic Chemistry Techniques & Spectra</a>
+                <a href="Topic Questions/MCQ/Physical Chemistry Core Practicals.pdf">Physical Chemistry Core Practicals</a>
+                <a href="Topic Questions/MCQ/Redox Chemistry & Acid-Base Titrations.pdf">Redox Chemistry & Acid-Base Titrations</a>
+                <a href="Topic Questions/MCQ/The Periodic Table.pdf">The Periodic Table</a>
+            </div>
+        </div>
+
+        <h2 class="section-title">Theory Questions</h2>
+        <div class="dropdown">
+            <button class="dropdown-btn" onclick="toggleDropdown('theoryDropdown')">Select a Topic</button>
+            <div id="theoryDropdown" class="dropdown-content">
+                <a href="Topic Questions/Theory/Alkanes.pdf">Alkanes</a>
+                <a href="Topic Questions/Theory/Alkenes.pdf">Alkenes</a>
+                <a href="Topic Questions/Theory/Amount of Substance.pdf">Amount of Substance</a>
+                <a href="Topic Questions/Theory/Atomic Structure.pdf">Atomic Structure</a>
+                <a href="Topic Questions/Theory/Covalent Bonding & Structure.pdf">Covalent Bonding & Structure</a>
+                <a href="Topic Questions/Theory/Electrons & Ions.pdf">Electrons & Ions</a>
+                <a href="Topic Questions/Theory/Energetics.pdf">Energetics</a>
+                <a href="Topic Questions/Theory/Formulae & Equations.pdf">Formulae & Equations</a>
+                <a href="Topic Questions/Theory/Group 7.pdf">Group 7</a>
+                <a href="Topic Questions/Theory/Groups 1 & 2.pdf">Groups 1 & 2</a>
+                <a href="Topic Questions/Theory/Inorganic & Organic Chemistry Core Practicals.pdf">Inorganic & Organic Chemistry Core Practicals</a>
+                <a href="Topic Questions/Theory/Intermolecular Forces.pdf">Intermolecular Forces</a>
+                <a href="Topic Questions/Theory/Introduction to Kinetics & Equilibria.pdf">Introduction to Kinetics & Equilibria</a>
+                <a href="Topic Questions/Theory/Ionic & Metallic Bonding & Structure.pdf">Ionic & Metallic Bonding & Structure</a>
+                <a href="Topic Questions/Theory/Organic Chemistry Halogenoalkanes.pdf">Organic Chemistry Halogenoalkanes</a>
+                <a href="Topic Questions/Theory/Organic Chemistry Techniques & Spectra.pdf">Organic Chemistry Techniques & Spectra</a>
+                <a href="Topic Questions/Theory/Physical Chemistry Core Practicals.pdf">Physical Chemistry Core Practicals</a>
+                <a href="Topic Questions/Theory/Redox Chemistry & Acid-Base Titrations.pdf">Redox Chemistry & Acid-Base Titrations</a>
+                <a href="Topic Questions/Theory/The Periodic Table.pdf">The Periodic Table</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleDropdown(id) {
+            document.getElementById(id).classList.toggle("show");
+            
+            // Close other dropdowns
+            var dropdowns = document.getElementsByClassName("dropdown-content");
+            for (var i = 0; i < dropdowns.length; i++) {
+                var openDropdown = dropdowns[i];
+                if (openDropdown.id !== id && openDropdown.classList.contains('show')) {
+                    openDropdown.classList.remove('show');
+                }
+            }
+        }
+
+        // Close dropdowns when clicking outside
+        window.onclick = function(event) {
+            if (!event.target.matches('.dropdown-btn')) {
+                var dropdowns = document.getElementsByClassName("dropdown-content");
+                for (var i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains('show')) {
+                        openDropdown.classList.remove('show');
+                    }
+                }
+            }
+        }
+    </script>
+</body>
+</html>

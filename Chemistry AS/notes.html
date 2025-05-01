@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notes - AS Chemistry</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #64ffda;
+            padding: 20px;
+            position: relative;
+            overflow: auto; /* Changed from hidden to enable scrolling */
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #64ffda;
+            font-size: 2.5em;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
+        }
+
+        .notes-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .topic-item {
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .topic-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            border-color: rgba(100, 255, 218, 0.6);
+            background: rgba(48, 63, 159, 0.3);
+        }
+
+        .topic-icon {
+            margin-right: 15px;
+            font-size: 1.5em;
+            color: #64ffda;
+        }
+
+        .topic-name {
+            font-size: 1.2em;
+            color: #64ffda;
+        }
+    </style>
+</head>
+<body>
+    <a href="chemistry.html" class="back-button">← Back to Chemistry</a>
+    <h1 class="main-title">AS Chemistry Notes</h1>
+
+    <div class="questions-container">
+        <a href="Notes/Alkanes.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Alkanes</div>
+        </a>
+        <a href="Notes/Alkenes.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Alkenes</div>
+        </a>
+        <a href="Notes/Amount of Substance.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Amount of Substance</div>
+        </a>
+        <a href="Notes/Atomic Structure.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Atomic Structure</div>
+        </a>
+        <a href="Notes/Covalent Bonding & Structure.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Covalent Bonding & Structure</div>
+        </a>
+        <a href="Notes/Electrons & Ions.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Electrons & Ions</div>
+        </a>
+        <a href="Notes/Energetics.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Energetics</div>
+        </a>
+        <a href="Notes/Formulae & Equations.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Formulae & Equations</div>
+        </a>
+        <a href="Notes/Group 7.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Group 7</div>
+        </a>
+        <a href="Notes/Groups 1 & 2.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Groups 1 & 2</div>
+        </a>
+        <a href="Notes/Inorganic & Organic Chemistry Core Practicals.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Inorganic & Organic Chemistry Core Practicals</div>
+        </a>
+        <a href="Notes/Intermolecular Forces.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Intermolecular Forces</div>
+        </a>
+        <a href="Notes/Introduction to Kinetics & Equilibria.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Introduction to Kinetics & Equilibria</div>
+        </a>
+        <a href="Notes/Introductory Organic Chemistry.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Introductory Organic Chemistry</div>
+        </a>
+        <a href="Notes/Ionic & Metallic Bonding & Structure.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Ionic & Metallic Bonding & Structure</div>
+        </a>
+        <a href="Notes/Organic Chemistry Alcohols.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Organic Chemistry Alcohols</div>
+        </a>
+        <a href="Notes/Organic Chemistry Halogenoalkanes.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Organic Chemistry Halogenoalkanes</div>
+        </a>
+        <a href="Notes/Organic Chemistry Techniques & Spectra.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Organic Chemistry Techniques & Spectra</div>
+        </a>
+        <a href="Notes/Organic ChemistryIntroduction.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Organic ChemistryIntroduction</div>
+        </a>
+        <a href="Notes/Physical Chemistry Core Practicals.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Physical Chemistry Core Practicals</div>
+        </a>
+        <a href="Notes/Redox Chemistry & Acid-Base Titrations.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">Redox Chemistry & Acid-Base Titrations</div>
+        </a>
+        <a href="Notes/The Periodic Table.pdf" class="topic-item">
+            <div class="topic-icon">📄</div>
+            <div class="topic-name">The Periodic Table</div>
+        </a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact - AS Level Resources</title>
+    <link rel="stylesheet" href="Website colors.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(255, 105, 180, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(0, 4, 255, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #64ffda;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+        }
+
+        .menu-content {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: transparent;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-content.active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .menu-item {
+            color: #64ffda;
+            padding: 20px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 1.8em;
+            border: 2px solid #64ffda;
+            background: transparent;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            width: 60%;
+            max-width: 400px;
+        }
+
+        .menu-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: scale(1.05);
+            border-color: #64ffda;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .menu-separator {
+            width: 60%;
+            max-width: 400px;
+            height: 1px;
+            background: rgba(100, 255, 218, 0.3);
+            margin: 10px 0;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            display: block;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #64ffda;
+            font-size: 2.5em;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            letter-spacing: 2px;
+        }
+
+        .contact-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            z-index: 10;
+        }
+
+        .contact-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 105, 180, 0.1) 0%, transparent 70%);
+            animation: pulse 15s infinite linear;
+            z-index: -1;
+        }
+
+        @keyframes pulse {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.1em;
+            color: #64ffda;
+            letter-spacing: 1px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: rgba(10, 25, 47, 0.7);
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            box-sizing: border-box;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #64ffda;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+            background: rgba(48, 63, 159, 0.2);
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .submit-btn {
+            background: linear-gradient(45deg, #ff69b4, #ffa500, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 15px 30px;
+            font-size: 1.2em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            letter-spacing: 2px;
+            display: block;
+            margin: 30px auto 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .submit-btn:hover {
+            background: linear-gradient(45deg, #ffa500, #ff69b4, #303f9f);
+            border-color: #64ffda;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.4);
+            transform: translateY(-5px);
+        }
+
+        .contact-info {
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid rgba(100, 255, 218, 0.3);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            gap: 20px;
+        }
+
+        .contact-method {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+
+        .contact-method:hover {
+            transform: translateY(-3px);
+        }
+
+        .contact-icon {
+            margin-right: 15px;
+            font-size: 1.5em;
+            color: #64ffda;
+        }
+
+        .contact-text {
+            font-size: 1.1em;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #ff69b4, #ffa500, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #ffa500, #ff69b4, #303f9f);
+            border-color: #64ffda;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.4);
+        }
+
+        /* Futuristic elements */
+        .circuit-lines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: #64ffda;
+        }
+
+        .circuit-line-1 {
+            top: 10%;
+            left: 0;
+            width: 30%;
+            height: 1px;
+        }
+
+        .circuit-line-2 {
+            top: 10%;
+            left: 0;
+            width: 1px;
+            height: 20%;
+        }
+
+        .circuit-line-3 {
+            top: 30%;
+            left: 0;
+            width: 20%;
+            height: 1px;
+        }
+
+        .circuit-line-4 {
+            top: 50%;
+            right: 0;
+            width: 40%;
+            height: 1px;
+        }
+
+        .circuit-line-5 {
+            top: 50%;
+            right: 0;
+            width: 1px;
+            height: 30%;
+        }
+
+        .circuit-line-6 {
+            top: 80%;
+            right: 0;
+            width: 25%;
+            height: 1px;
+        }
+
+        .circuit-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #64ffda;
+            box-shadow: 0 0 10px #64ffda;
+        }
+
+        .circuit-dot-1 {
+            top: 10%;
+            left: 30%;
+        }
+
+        .circuit-dot-2 {
+            top: 30%;
+            left: 20%;
+        }
+
+        .circuit-dot-3 {
+            top: 50%;
+            right: 40%;
+        }
+
+        .circuit-dot-4 {
+            top: 80%;
+            right: 25%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .form-group {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .form-group:nth-child(1) { animation-delay: 0.1s; }
+        .form-group:nth-child(2) { animation-delay: 0.2s; }
+        .form-group:nth-child(3) { animation-delay: 0.3s; }
+        .form-group:nth-child(4) { animation-delay: 0.4s; }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    
+    <a href="subjects.html" class="back-button">← Back to Home</a>
+    
+    <h1 class="main-title">Contact Us</h1>
+    
+    <div class="contact-container">
+        <div class="circuit-lines">
+            <div class="circuit-line circuit-line-1"></div>
+            <div class="circuit-line circuit-line-2"></div>
+            <div class="circuit-line circuit-line-3"></div>
+            <div class="circuit-line circuit-line-4"></div>
+            <div class="circuit-line circuit-line-5"></div>
+            <div class="circuit-line circuit-line-6"></div>
+            <div class="circuit-dot circuit-dot-1"></div>
+            <div class="circuit-dot circuit-dot-2"></div>
+            <div class="circuit-dot circuit-dot-3"></div>
+            <div class="circuit-dot circuit-dot-4"></div>
+        </div>
+        
+        <form id="contact-form">
+            <div class="form-group">
+                <label for="name">Your Name</label>
+                <input type="text" id="name" class="form-control" placeholder="Enter your name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" placeholder="Enter your email" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="subject">Subject</label>
+                <input type="text" id="subject" class="form-control" placeholder="Enter subject">
+            </div>
+            
+            <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" class="form-control" placeholder="Enter your message" required></textarea>
+            </div>
+            
+            <button type="submit" class="submit-btn">SEND MESSAGE</button>
+        </form>
+        
+        <div class="contact-info">
+            <div class="contact-method">
+                <div class="contact-icon">📧</div>
+                <div class="contact-text">ghaithamoudi@gmail.com</div>
+            </div>
+            
+            <div class="contact-method">
+                <div class="contact-icon">📱</div>
+                <div class="contact-text">+962770033000</div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="top-menu">
+        <button class="menu-button">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </button>
+        <div class="menu-content">
+            <div class="menu-item">Home</div>
+            <div class="menu-item"><a href="subjects.html" style="color: inherit; text-decoration: none;">Subjects</a></div>
+            <div class="menu-separator"></div>
+            <div class="menu-item"><a href="contact.html" style="color: inherit; text-decoration: none;">Contact</a></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const menuButton = document.querySelector('.menu-button');
+            const menuContent = document.querySelector('.menu-content');
+            const overlay = document.querySelector('.overlay');
+
+            menuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menuContent.classList.toggle('active');
+                overlay.classList.toggle('active');
+                this.classList.toggle('active');
+                this.setAttribute('aria-expanded', menuContent.classList.contains('active'));
+            });
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    console.log('Clicked:', this.textContent);
+                    menuContent.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuButton.classList.remove('active');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                });
+            });
+            
+            // Close menu when clicking elsewhere
+            document.addEventListener('click', function(e) {
+                if (!menuContent.contains(e.target) && e.target !== menuButton) {
+                    menuContent.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuButton.classList.remove('active');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+
+            // Form submission handling
+            const contactForm = document.getElementById('contact-form');
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form values
+                const name = document.getElementById('name').value;
+                const email = document.getElementById('email').value;
+                const subject = document.getElementById('subject').value;
+                const message = document.getElementById('message').value;
+                
+                // Here you would typically send the data to a server
+                console.log('Form submitted:', { name, email, subject, message });
+                
+                // Show success message (in a real app, you'd wait for server response)
+                alert('Thank you for your message! We will get back to you soon.');
+                
+                // Reset form
+                contactForm.reset();
+            });
+        });
+    </script>
+</body>
+</html>

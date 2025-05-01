@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Information Technology AS Notes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #64ffda;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #64ffda;
+            font-size: 2.5em;
+            margin-top: 40px;
+            margin-bottom: 60px;
+            font-weight: bold;
+            text-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+            letter-spacing: 2px;
+        }
+
+        /* Back button styling */
+        .back-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 10px 20px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 100;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.3);
+        }
+
+        .back-button:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.5);
+            transform: translateY(-3px);
+        }
+
+        /* Content styling */
+        .content-container {
+            max-width: 1000px;
+            margin: 0 auto 60px auto;
+            padding: 40px;
+            background: rgba(10, 25, 47, 0.7);
+            border-radius: 15px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.2);
+            backdrop-filter: blur(5px);
+        }
+
+        .topic-list {
+            list-style-type: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr;  /* Changed to single column */
+            gap: 30px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        .topic-button {
+            background: linear-gradient(135deg, rgba(48, 63, 159, 0.2), rgba(10, 25, 47, 0.4));
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 12px;
+            padding: 25px;
+            color: #64ffda;
+            font-size: 1.2em;
+            text-align: left;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            width: 100%;
+            box-sizing: border-box;  /* Added to include padding in width calculation */
+            display: block;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2), 0 0 15px rgba(100, 255, 218, 0.1);
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 2;
+            margin-bottom: 0;  /* Removed extra margin */
+        }
+
+        .topic-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(100, 255, 218, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: -1;
+        }
+
+        .topic-button::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 100%;
+            top: 0;
+            right: -50px;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.3), transparent);
+            transform: skewX(-20deg);
+            transition: all 0.7s ease;
+            z-index: -1;
+        }
+
+        .topic-button:hover {
+            background: linear-gradient(135deg, rgba(48, 63, 159, 0.4), rgba(10, 25, 47, 0.6));
+            transform: translateY(-8px) scale(1.03);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3), 0 0 20px rgba(100, 255, 218, 0.5);
+            border-color: #64ffda;
+            letter-spacing: 1px;
+        }
+
+        .topic-button:hover::before {
+            opacity: 1;
+        }
+
+        .topic-button:hover::after {
+            right: 120%;
+            transition: all 0.7s ease;
+        }
+
+        .topic-button:active {
+            transform: translateY(2px) scale(0.98);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2), 0 0 10px rgba(100, 255, 218, 0.2);
+        }
+
+        /* Scrollbar styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(to bottom, #64ffda, #303f9f);
+            border-radius: 10px;
+            border: 2px solid rgba(10, 25, 47, 0.5);
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, #64ffda, #4158d0);
+        }
+
+        /* Add some space at the bottom for better scrolling */
+        .page-footer {
+            height: 60px;
+        }
+    </style>
+	<link href="../Website%20colors.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <h1 class="main-title">Information Technology AS Notes</h1>
+    
+    <a href="it.html" class="back-button">← Back</a>
+    
+    <div class="content-container">
+        <div class="topic-list">
+            <a href="Notes/Expert Systems.pdf" class="topic-button" target="_blank">
+                Expert Systems
+            </a>
+            <a href="Notes/The Digital Divide.pdf" class="topic-button" target="_blank">
+                The Digital Divide
+            </a>
+            <a href="Notes/eSecurity.pdf" class="topic-button" target="_blank">
+                eSecurity
+            </a>
+            <a href="Notes/Algorithms and Flowcharts.pdf" class="topic-button" target="_blank">
+                Algorithms and Flowcharts
+            </a>
+            <a href="Notes/Monitoring and Control.pdf" class="topic-button" target="_blank">
+                Monitoring and Control
+            </a>
+            <a href="Notes/Hardware and Software.pdf" class="topic-button" target="_blank">
+                Hardware and Software
+            </a>
+            <a href="Notes/Data Processing and Information.pdf" class="topic-button" target="_blank">
+                Data Processing and Information
+            </a>
+        </div>
+    </div>
+    
+    <div class="page-footer"></div>
+</body>
+</html>
