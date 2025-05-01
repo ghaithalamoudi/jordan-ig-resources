@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AS Subjects - Home</title>
+    <link rel="stylesheet" href="Website colors.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: 
+                radial-gradient(circle at 10% 20%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                radial-gradient(circle at 90% 80%, rgba(100, 255, 218, 0.1) 0%, transparent 20%),
+                linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            color: #64ffda;
+            padding: 20px;
+            position: relative;
+            overflow: auto;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.25) 50%),
+                linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .main-title {
+            text-align: center;
+            color: #64ffda;
+            font-size: 3em;
+            margin-top: 40px;
+            margin-bottom: 40px;
+            font-weight: bold;
+            text-shadow: 0 0 15px rgba(100, 255, 218, 0.7);
+            letter-spacing: 3px;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .main-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, #64ffda, transparent);
+        }
+
+        /* Moved menu from right to left */
+        .top-menu {
+            position: fixed;
+            top: 20px;
+            left: 20px; /* Changed from right to left */
+            z-index: 1000;
+        }
+
+        .menu-button {
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            width: 50px;
+            height: 50px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 6px;
+            z-index: 1001;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .menu-button .line {
+            width: 25px;
+            height: 2px;
+            background-color: #64ffda;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 10px rgba(100, 255, 218, 0.5);
+        }
+
+        .menu-button.active .line:nth-child(1) {
+            transform: rotate(45deg) translate(6px, 6px);
+        }
+
+        .menu-button.active .line:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-button.active .line:nth-child(3) {
+            transform: rotate(-45deg) translate(6px, -6px);
+        }
+
+        .menu-button:hover {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 30px rgba(100, 255, 218, 0.5);
+            transform: scale(1.05);
+        }
+
+        .menu-button:hover .line {
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.8);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(10, 25, 47, 0.95);
+            backdrop-filter: blur(15px);
+            z-index: 999;
+        }
+
+        .menu-content {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: transparent;
+            padding: 0;
+            border: none;
+            box-shadow: none;
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .menu-content.active {
+            display: flex;
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .menu-item {
+            color: #64ffda;
+            padding: 20px 30px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-size: 1.8em;
+            border: 2px solid #64ffda;
+            background: transparent;
+            text-align: center;
+            letter-spacing: 2px;
+            position: relative;
+            overflow: hidden;
+            width: 60%;
+            max-width: 400px;
+        }
+
+        .menu-item:hover {
+            background: rgba(100, 255, 218, 0.1);
+            transform: scale(1.05);
+            border-color: #64ffda;
+            box-shadow: 0 0 20px rgba(100, 255, 218, 0.3);
+        }
+
+        .menu-separator {
+            width: 60%;
+            max-width: 400px;
+            height: 1px;
+            background: rgba(100, 255, 218, 0.3);
+            margin: 10px 0;
+        }
+
+        .overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+            display: block;
+        }
+
+        .subjects-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            perspective: 1000px;
+        }
+
+        /* Enhanced futuristic button styling */
+        .subject-card {
+            background: rgba(10, 25, 47, 0.5);
+            border-radius: 15px;
+            padding: 30px;
+            border: 1px solid rgba(100, 255, 218, 0.3);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(5px);
+            transform-style: preserve-3d;
+            text-decoration: none;
+        }
+
+        .subject-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(100, 255, 218, 0.1) 0%, transparent 70%);
+            transform: rotate(0deg);
+            transition: transform 1s linear;
+            z-index: -1;
+        }
+
+        .subject-card:hover::before {
+            transform: rotate(180deg);
+        }
+
+        .subject-card::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            background: linear-gradient(45deg, 
+                rgba(100, 255, 218, 0) 0%, 
+                rgba(100, 255, 218, 0.1) 50%, 
+                rgba(100, 255, 218, 0) 100%);
+            transform: translateX(-100%);
+            transition: transform 0.6s ease;
+        }
+
+        .subject-card:hover::after {
+            transform: translateX(100%);
+        }
+
+        .subject-card:hover {
+            transform: translateY(-15px) rotateX(5deg) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5), 
+                        0 0 30px rgba(100, 255, 218, 0.4);
+            border-color: #64ffda;
+        }
+
+        .subject-icon {
+            font-size: 4em;
+            margin-bottom: 20px;
+            color: #64ffda;
+            text-shadow: 0 0 15px rgba(100, 255, 218, 0.7);
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .subject-card:hover .subject-icon {
+            transform: scale(1.2) translateZ(20px);
+            text-shadow: 0 0 25px rgba(100, 255, 218, 0.9);
+        }
+
+        .subject-title {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            color: #64ffda;
+            font-weight: bold;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .subject-card:hover .subject-title {
+            transform: translateZ(15px);
+        }
+
+        .subject-description {
+            color: rgba(100, 255, 218, 0.8);
+            margin-bottom: 25px;
+            line-height: 1.7;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .subject-card:hover .subject-description {
+            transform: translateZ(10px);
+        }
+
+        /* Enhanced futuristic button styling */
+        .subject-btn {
+            background: linear-gradient(45deg, #0a192f, #303f9f);
+            color: #64ffda;
+            border: 2px solid rgba(100, 255, 218, 0.3);
+            border-radius: 8px;
+            padding: 12px 25px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            margin-top: auto;
+            letter-spacing: 1px;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            box-shadow: 0 0 15px rgba(100, 255, 218, 0.2);
+        }
+
+        .subject-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(100, 255, 218, 0.2), transparent);
+            transition: all 0.5s ease;
+        }
+
+        .subject-card:hover .subject-btn::before {
+            left: 100%;
+        }
+
+        .subject-card:hover .subject-btn {
+            background: linear-gradient(45deg, #303f9f, #0a192f);
+            border-color: #64ffda;
+            box-shadow: 0 0 25px rgba(100, 255, 218, 0.4);
+            transform: translateY(-5px) translateZ(20px);
+        }
+
+        /* Circuit lines decoration */
+        .circuit-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.15;
+        }
+
+        .circuit-line {
+            position: absolute;
+            background: #64ffda;
+        }
+
+        .circuit-line-1 {
+            top: 10%;
+            left: 0;
+            width: 30%;
+            height: 1px;
+        }
+
+        .circuit-line-2 {
+            top: 10%;
+            left: 0;
+            width: 1px;
+            height: 20%;
+        }
+
+        .circuit-line-3 {
+            top: 30%;
+            left: 0;
+            width: 20%;
+            height: 1px;
+        }
+
+        .circuit-line-4 {
+            top: 50%;
+            right: 0;
+            width: 40%;
+            height: 1px;
+        }
+
+        .circuit-line-5 {
+            top: 50%;
+            right: 0;
+            width: 1px;
+            height: 30%;
+        }
+
+        .circuit-line-6 {
+            top: 80%;
+            right: 0;
+            width: 25%;
+            height: 1px;
+        }
+
+        .circuit-dot {
+            position: absolute;
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #64ffda;
+            box-shadow: 0 0 10px #64ffda;
+        }
+
+        .circuit-dot-1 {
+            top: 10%;
+            left: 30%;
+        }
+
+        .circuit-dot-2 {
+            top: 30%;
+            left: 20%;
+        }
+
+        .circuit-dot-3 {
+            top: 50%;
+            right: 40%;
+        }
+
+        .circuit-dot-4 {
+            top: 80%;
+            right: 25%;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .subject-card {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+
+        .subject-card:nth-child(1) { animation-delay: 0.1s; }
+        .subject-card:nth-child(2) { animation-delay: 0.2s; }
+        .subject-card:nth-child(3) { animation-delay: 0.3s; }
+        .subject-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @media (max-width: 768px) {
+            .subjects-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="circuit-lines">
+        <div class="circuit-line circuit-line-1"></div>
+        <div class="circuit-line circuit-line-2"></div>
+        <div class="circuit-line circuit-line-3"></div>
+        <div class="circuit-line circuit-line-4"></div>
+        <div class="circuit-line circuit-line-5"></div>
+        <div class="circuit-line circuit-line-6"></div>
+        <div class="circuit-dot circuit-dot-1"></div>
+        <div class="circuit-dot circuit-dot-2"></div>
+        <div class="circuit-dot circuit-dot-3"></div>
+        <div class="circuit-dot circuit-dot-4"></div>
+    </div>
+
+    <div class="overlay"></div>
+    
+    <h1 class="main-title">AS Subjects - Home</h1>
+
+    <div class="subjects-container">
+        <a href="Chemistry AS/chemistry.html" class="subject-card">
+            <div class="subject-icon">⚗️</div>
+            <h2 class="subject-title">Chemistry (WCH)</h2>
+            <p class="subject-description">Explore atomic structure, chemical bonding, energetics, and organic chemistry with our comprehensive AS Chemistry resources.</p>
+            <div class="subject-btn">Explore</div>
+        </a>
+
+        <a href="Mathematics AS/mathematics.html" class="subject-card">
+            <div class="subject-icon">🧮</div>
+            <h2 class="subject-title">Mathematics</h2>
+            <p class="subject-description">Master pure mathematics, statistics, and mechanics with our detailed AS Mathematics study materials.</p>
+            <div class="subject-btn">Explore</div>
+        </a>
+
+        <a href="Physics AS/physics.html" class="subject-card">
+            <div class="subject-icon">🔭</div>
+            <h2 class="subject-title">Physics (WPH)</h2>
+            <p class="subject-description">Understand mechanics, electricity, waves, and quantum physics with our AS Physics resources.</p>
+            <div class="subject-btn">Explore</div>
+        </a>
+
+        <a href="Biology AS/biology.html" class="subject-card">
+            <div class="subject-icon">🧬</div>
+            <h2 class="subject-title">Biology (WBI)</h2>
+            <p class="subject-description">Study cells, biological molecules, enzymes, and human physiology with our AS Biology materials.</p>
+            <div class="subject-btn">Explore</div>
+        </a>
+
+        <a href="Information Technology AS/it.html" class="subject-card">
+            <div class="subject-icon">💻</div>
+            <h2 class="subject-title">Information Technology (9626)</h2>
+            <p class="subject-description">Explore data processing, hardware, software, and IT applications with our comprehensive AS Information Technology resources.</p>
+            <div class="subject-btn">Explore</div>
+        </a>
+    </div>
+    
+    <!-- Menu moved from right to left -->
+    <div class="top-menu">
+        <button class="menu-button">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </button>
+        <div class="menu-content">
+            <div class="menu-item"><a href="subjects.html" style="color: inherit; text-decoration: none;">Home</a></div>
+            <div class="menu-separator"></div>
+            <div class="menu-item"><a href="contact.html" style="color: inherit; text-decoration: none;">Contact</a></div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effect that follows cursor for each card
+            const cards = document.querySelectorAll('.subject-card');
+            
+            cards.forEach(card => {
+                card.addEventListener('mousemove', function(e) {
+                    const rect = this.getBoundingClientRect();
+                    const x = e.clientX - rect.left; // x position within the element
+                    const y = e.clientY - rect.top;  // y position within the element
+                    
+                    // Calculate rotation based on mouse position
+                    const centerX = rect.width / 2;
+                    const centerY = rect.height / 2;
+                    const rotateY = (x - centerX) / 20;
+                    const rotateX = (centerY - y) / 20;
+                    
+                    this.style.transform = `translateY(-15px) rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = '';
+                });
+            });
+            
+            // Menu functionality
+            const menuButton = document.querySelector('.menu-button');
+            const menuContent = document.querySelector('.menu-content');
+            const overlay = document.querySelector('.overlay');
+
+            menuButton.addEventListener('click', function(e) {
+                e.stopPropagation();
+                menuContent.classList.toggle('active');
+                overlay.classList.toggle('active');
+                this.classList.toggle('active');
+                this.setAttribute('aria-expanded', menuContent.classList.contains('active'));
+            });
+
+            document.querySelectorAll('.menu-item').forEach(item => {
+                item.addEventListener('click', function() {
+                    console.log('Clicked:', this.textContent);
+                    menuContent.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuButton.classList.remove('active');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                });
+            });
+            
+            // Close menu when clicking elsewhere
+            document.addEventListener('click', function(e) {
+                if (!menuContent.contains(e.target) && e.target !== menuButton) {
+                    menuContent.classList.remove('active');
+                    overlay.classList.remove('active');
+                    menuButton.classList.remove('active');
+                    menuButton.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
